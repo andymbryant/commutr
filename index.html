@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+  <script  async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZI_FNTwVdkIH94_q1OdbChfEriD_44XI&callback=initMap&libraries=geometry,places&ext=.js">
+    </script>
+  <!--<script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry,places&ext=.js"></script>-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="main.css">
+
+  <title>Commutr App</title>
+</head>
+<body>
+  <div id="prompt">
+    <h1>Commutr App</h1>
+    <p><em>Enter an address</em></p>
+    <form>
+      <input type='text' class='' id="address-input" name="address-input" placeholder="Enter address here">
+      <label for="address-input">
+      <button>Submit</button>
+    </form>
+  </div>
+  <div id="map" class='none'></div>
+  <div id="origin"></div>
+  <div id="places">
+    <ol>
+    </ol>
+  </div>
+
+<script type="text/javascript" src='index.js'></script>
+</body>
+</html>
