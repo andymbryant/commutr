@@ -104,7 +104,7 @@ function getDistanceDriving(x, z) {
       let distance = Math.floor(response.routes[0].legs[0].duration.value/60)
       let distance2 = response.routes[0].legs[0].duration.value%60;
       $('#places ol').append(`<li>${x}<ul class=${z}></ul></li>`);
-      $(`.${z}`).append(`<li><strong>Driving:</strong> ${distance} minutes ${distance2} seconds</li>`);
+      $(`.${z}`).append(`<li><strong><span id="color1">Driving:</span></strong> ${distance} minutes ${distance2} seconds</li>`);
     }
   else {
     alert("Sorry. There is no route between these points. Please try again.")
@@ -124,7 +124,7 @@ function getDistanceTransit(x, z) {
       //console.log(response.routes[0].legs[0].distance.value); // the distance in metres
       let distance = Math.floor(response.routes[0].legs[0].duration.value/60)
       let distance2 = response.routes[0].legs[0].duration.value%60;
-      $(`.${z}`).append(`<li><strong>Transit:</strong> ${distance} minutes ${distance2} seconds</li>`);
+      $(`.${z}`).append(`<li><strong><span id="color2">Transit:</span></strong> ${distance} minutes ${distance2} seconds</li>`);
     }
   else {
     alert("Sorry. There is no route between these points. Please try again.")
@@ -144,7 +144,7 @@ function getDistanceCycling(x, z) {
       //console.log(response.routes[0].legs[0].distance.value); // the distance in metres
       let distance = Math.floor(response.routes[0].legs[0].duration.value/60)
       let distance2 = response.routes[0].legs[0].duration.value%60;
-      $(`.${z}`).append(`<li><strong>Bicyling:</strong> ${distance} minutes ${distance2} seconds</li>`);
+      $(`.${z}`).append(`<li><strong><span id="color3">Bicyling:</span></strong> ${distance} minutes ${distance2} seconds</li>`);
     }
   else {
     alert("Sorry. There is no route between these points. Please try again.")
@@ -164,7 +164,7 @@ function getDistanceWalking(x, z) {
       //console.log(response.routes[0].legs[0].distance.value); // the distance in metres
       let distance = Math.floor(response.routes[0].legs[0].duration.value/60)
       let distance2 = response.routes[0].legs[0].duration.value%60;
-      $(`.${z}`).append(`<li><strong>Walking:</strong> ${distance} minutes ${distance2} seconds</li>`);
+      $(`.${z}`).append(`<li><strong><span id="color4">Walking:</span></strong> ${distance} minutes ${distance2} seconds</li>`);
     }
   else {
     alert("Sorry. There is no route between these points. Please try again.")
