@@ -1,3 +1,7 @@
+* {
+  font-family: 'Lato', sans-serif;
+}
+
 h1 {
   text-align: center;
 }
@@ -5,6 +9,7 @@ h1 {
 #prompt {
   margin: 20%;
   text-align: center;
+
 }
 
 #map {
@@ -30,4 +35,20 @@ form input {
 }
 
 #over {
+}
+
+#color1 {
+  color: red;
+}
+
+#color2 {
+  color: blue;
+}
+
+#color3 {
+  color: green;
+}
+
+#color4 {
+  color: orange;
 }
