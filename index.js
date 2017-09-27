@@ -6,8 +6,6 @@ function startOver() {
   location.reload();
 }
 
-//Monday September 25 7:40pm
-
 let homeAddress = [];
 let newAddress = [];
 
@@ -37,7 +35,6 @@ function init() {
     })
     .then(function(response){
         let formattedAddress = response.data.results[0].formatted_address;
-        //var addressComponents = response.data.results[0].address_components;
         let lat = response.data.results[0].geometry.location.lat;
         let lng = response.data.results[0].geometry.location.lng;
         homeAddress.push(formattedAddress);
@@ -52,18 +49,18 @@ function init() {
 function initMap(x, y) {
   let options = {
     zoom:13,
-    //center: {lat: x, lng: y}
     center: new google.maps.LatLng(x, y)
   }
   let labels = '123456789';
   let labelIndex = 0;
   let map = new google.maps.Map(document.getElementById('map'), options);
+
+
   let alpha_marker = new google.maps.Marker({
     position: new google.maps.LatLng(x, y),
     map:map,
     icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
   });
-
 
   let z = 0;
   let geocoder = new google.maps.Geocoder();
