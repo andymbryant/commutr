@@ -46,6 +46,9 @@ function init() {
   }
 }
 
+
+
+
 function initMap(x, y) {
   let options = {
     zoom:13,
