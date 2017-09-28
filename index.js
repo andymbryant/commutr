@@ -6,6 +6,8 @@ function startOver() {
   location.reload();
 }
 
+//It is Wednesday my dudes.
+
 let homeAddress = [];
 let newAddress = [];
 
