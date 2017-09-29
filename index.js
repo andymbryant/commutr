@@ -16,8 +16,10 @@ function init() {
   $('button').on('click', function(event){
     event.preventDefault();
     let location = $('#address-input').val();
+    openNav();
     $('#prompt').addClass('none');
     $('#map').removeClass('none');
+    $('#mySidenav').removeClass('transparent');
     geoCode(location);
     $('#origin').html(`
       <h4>Your home address is <strong>${location}</strong></h4>
@@ -173,3 +175,14 @@ function getDistanceWalking(x, z) {
     }
   })
 };
+
+/* Set the width of the side navigation to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "300px";
+
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
