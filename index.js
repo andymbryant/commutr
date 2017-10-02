@@ -16,7 +16,7 @@ function init() {
   $('button').on('click', function(event){
     event.preventDefault();
     let location = $('#address-input').val();
-    openNav();
+    setNav();
     $('#prompt').addClass('none');
     $('#map').removeClass('none');
     $('#mySidenav').removeClass('transparent');
@@ -79,10 +79,20 @@ function initMap(x, y) {
            let betaAddress = results[0].formatted_address;
            newAddress.push(betaAddress);
            z += 1;
-           getDistanceDriving(betaAddress, z);
-           getDistanceTransit(betaAddress, z);
-           getDistanceCycling(betaAddress, z);
-           getDistanceWalking(betaAddress, z);
+           if ($('#type:option selected').val()=="Driving") {
+             alert('!');
+             getDistanceDriving(betaAddress, z);
+           }
+           else if ($('#type').val()=="Walking") {
+             getDistanceWalking(betaAddress, z);
+           }
+           else if ($('#type').val()=="Bicycling") {
+             getDistanceCycling(betaAddress, z);
+           }
+           else if ($('#type').val()="Transit") {
+             getDistanceTransit(betaAddress, z);
+           }
+
          }
        }
      })
@@ -177,12 +187,17 @@ function getDistanceWalking(x, z) {
 };
 
 /* Set the width of the side navigation to 250px */
+function setNav() {
+    document.getElementById("mySidenav").style.width = "25%";
+
+}
+
 function openNav() {
-    document.getElementById("mySidenav").style.width = "300px";
+    document.getElementById("mySidenav").style.left = "0px";
 
 }
 
 /* Set the width of the side navigation to 0 */
 function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("mySidenav").style.left = "-500px";
 }

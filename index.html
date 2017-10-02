@@ -16,7 +16,7 @@
   <title>Commutr App</title>
 </head>
 <body>
-  <div id="mySidenav" class="sidenav transparent">
+  <div id="mySidenav" class="sidenav">
     <div id="prompt">
       <h1>Commutr App</h1>
       <p><em>Enter an address</em></p>
@@ -25,13 +25,21 @@
         <button>Submit</button>
       </form>
     </div>
-    <div id="origin"></div>
+    <div id="origin">
+      <select id="type">
+        <option value="Walking">Walking</option>
+        <option value="Bicycling">Bicycling</option>
+        <option value="Transit">Transit</option>
+        <option value="Driving" selected>Driving</option>
+      </select>
+    </div>
     <div id="places">
+
       <ol>
       </ol>
     </div>
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-</div>
+  </div>
 
 <!-- Use any element to open the sidenav -->
 <span onclick="openNav()">open</span>
@@ -40,8 +48,8 @@
   <div id="wrapper">
     <div id="map" class='none'></div>
   </div>
-  <div id="origin"></div>
-
+  <div id="origin">
+  </div>
 
 <script type="text/javascript" src='index.js'></script>
 </body>
