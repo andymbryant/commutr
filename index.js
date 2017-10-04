@@ -19,12 +19,13 @@ function init() {
     setNav();
     $('#prompt').addClass('none');
     $('#map').removeClass('none');
+    $('#icon').removeClass('none');
+    $('#places').removeClass('none');
+    $('#type').removeClass('none');
     $('#mySidenav').removeClass('transparent');
     geoCode(location);
-    $('#origin').html(`
-      <h4>Your home address is <strong>${location}</strong></h4>
-      <p class="inline"><em>Click on the map to find the distance to other locations or </em></p><button class="inline" id="over">start over</button>
-      `);
+    $('#origin').html(`<h4>Your origin is <strong>${location}</strong></h4>`);
+    $('#bottom').html('<button class="inline" id="over">start over</button>');
     $('#over').on('click', function(){
       startOver();
     })
@@ -43,7 +44,7 @@ function init() {
         let lat = response.data.results[0].geometry.location.lat;
         let lng = response.data.results[0].geometry.location.lng;
         homeAddress.push(formattedAddress);
-        initMap(lat, lng);
+        initMap(lat, lng, formattedAddress);
     })
     .catch(function(error){
       console.log(error);
@@ -51,12 +52,22 @@ function init() {
   }
 }
 
-function initMap(x, y) {
+function initMap(x, y, a) {
   let options = {
     zoom:13,
-    //center: {lat: x, lng: y}
-    center: new google.maps.LatLng(x, y)
+    center: new google.maps.LatLng(x, y),
+    mapTypeControl: false
   }
+  let originString = `<div id="originString">
+  <p>Your origin is <strong>${a}.</strong><p>
+  <p>Click on the map to find commute times to and from other locations.</p>
+  </div>
+  `;
+
+   var infowindow = new google.maps.InfoWindow({
+     content: originString
+   });
+
   let labels = '123456789';
   let labelIndex = 0;
   let map = new google.maps.Map(document.getElementById('map'), options);
@@ -65,8 +76,8 @@ function initMap(x, y) {
     map:map,
     icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
   });
-
-
+  infowindow.open(map, alpha_marker);
+  setTimeout(function () { infowindow.close(); }, 5000);
   let z = 0;
   let geocoder = new google.maps.Geocoder();
   google.maps.event.addListener(map, 'click', function(event) {
@@ -79,20 +90,8 @@ function initMap(x, y) {
            let betaAddress = results[0].formatted_address;
            newAddress.push(betaAddress);
            z += 1;
-           if ($('#type:option selected').val()=="Driving") {
-             alert('!');
-             getDistanceDriving(betaAddress, z);
-           }
-           else if ($('#type').val()=="Walking") {
-             getDistanceWalking(betaAddress, z);
-           }
-           else if ($('#type').val()=="Bicycling") {
-             getDistanceCycling(betaAddress, z);
-           }
-           else if ($('#type').val()="Transit") {
-             getDistanceTransit(betaAddress, z);
-           }
-
+           let type = $('#type').find(":selected").text();
+           getDistance(betaAddress, type.toUpperCase(), z);
          }
        }
      })
@@ -105,12 +104,18 @@ function initMap(x, y) {
       });
   }
 }
-function getDistanceDriving(x, z) {
+function getDistance(x, y, z) {
+  let travelModeVar;
+  for (let travelMode in google.maps.DirectionsTravelMode){
+    if (travelMode==y) {
+      travelModeVar = y;
+    }
+  }
   var directionsService = new google.maps.DirectionsService();
   var request = {
     origin      : homeAddress[0],
     destination : x,
-    travelMode  : google.maps.DirectionsTravelMode.DRIVING
+    travelMode  : travelModeVar
   };
   directionsService.route(request, function(response, status) {
     if ( status == google.maps.DirectionsStatus.OK ) {
@@ -126,78 +131,37 @@ function getDistanceDriving(x, z) {
   })
 };
 
-function getDistanceTransit(x, z) {
-  var directionsService = new google.maps.DirectionsService();
-  var request = {
-    origin      : homeAddress[0],
-    destination : x,
-    travelMode  : google.maps.DirectionsTravelMode.TRANSIT
-  };
-  directionsService.route(request, function(response, status) {
-    if ( status == google.maps.DirectionsStatus.OK ) {
-      //console.log(response.routes[0].legs[0].distance.value); // the distance in metres
-      let distance = Math.floor(response.routes[0].legs[0].duration.value/60)
-      let distance2 = response.routes[0].legs[0].duration.value%60;
-      $(`.${z}`).append(`<li><strong><span id="color2">Transit:</span></strong> ${distance} minutes ${distance2} seconds</li>`);
-    }
-  else {
-    alert("Sorry. There is no route between these points. Please try again.")
-    }
-  })
-};
-
-function getDistanceCycling(x, z) {
-  var directionsService = new google.maps.DirectionsService();
-  var request = {
-    origin      : homeAddress[0],
-    destination : x,
-    travelMode  : google.maps.DirectionsTravelMode.BICYCLING
-  };
-  directionsService.route(request, function(response, status) {
-    if ( status == google.maps.DirectionsStatus.OK ) {
-      //console.log(response.routes[0].legs[0].distance.value); // the distance in metres
-      let distance = Math.floor(response.routes[0].legs[0].duration.value/60)
-      let distance2 = response.routes[0].legs[0].duration.value%60;
-      $(`.${z}`).append(`<li><strong><span id="color3">Bicyling:</span></strong> ${distance} minutes ${distance2} seconds</li>`);
-    }
-  else {
-    alert("Sorry. There is no route between these points. Please try again.")
-    }
-  })
-};
-
-function getDistanceWalking(x, z) {
-  var directionsService = new google.maps.DirectionsService();
-  var request = {
-    origin      : homeAddress[0],
-    destination : x,
-    travelMode  : google.maps.DirectionsTravelMode.WALKING
-  };
-  directionsService.route(request, function(response, status) {
-    if ( status == google.maps.DirectionsStatus.OK ) {
-      //console.log(response.routes[0].legs[0].distance.value); // the distance in metres
-      let distance = Math.floor(response.routes[0].legs[0].duration.value/60)
-      let distance2 = response.routes[0].legs[0].duration.value%60;
-      $(`.${z}`).append(`<li><strong><span id="color4">Walking:</span></strong> ${distance} minutes ${distance2} seconds</li>`);
-    }
-  else {
-    alert("Sorry. There is no route between these points. Please try again.")
-    }
-  })
-};
-
-/* Set the width of the side navigation to 250px */
 function setNav() {
     document.getElementById("mySidenav").style.width = "25%";
-
 }
 
 function openNav() {
     document.getElementById("mySidenav").style.left = "0px";
-
 }
 
-/* Set the width of the side navigation to 0 */
 function closeNav() {
     document.getElementById("mySidenav").style.left = "-500px";
+}
+
+function closeNavIcon() {
+    document.getElementById("mySidenav").style.left = "-500px";
+}
+
+function openClose(x) {
+   if ($('.container').hasClass('change') === true) {
+     x.classList.toggle("change");
+     closeNav();
+   }
+    else if ($('.container').hasClass('change') === false) {
+      x.classList.toggle("change");
+      openNav();
+    }
+}
+
+function pushAddress(x) {
+  originString = $(`Your origin address is ${x}`);
+}
+
+function closeInfoWindow() {
+  infowindow.close();
 }

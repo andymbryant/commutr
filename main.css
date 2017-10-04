@@ -1,5 +1,6 @@
 * {
   font-family: 'Lato', sans-serif;
+  font-weight: 400;
 }
 
 html, body, #wrapper {
@@ -7,8 +8,14 @@ html, body, #wrapper {
   width: 100%;
 }
 
-h1 {
+h1, h4, p {
   text-align: center;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 50px;
+  margin: 0;
 }
 
 #prompt {
@@ -28,6 +35,12 @@ form input {
 #origin {
   margin-top: 30px;
   text-align: center;
+  padding: 0 10px;
+}
+
+#select {
+  text-align: center;
+
 }
 
 .inline {
@@ -50,24 +63,25 @@ form input {
   color: orange;
 }
 
-
-
 #mySidenav {
   width: 100%;
+  height: 100%;
   display: absolute;
+  overflow-x: hidden;
 }
 
 .sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
     top: 0;
     left: 0;
-    background-color: #E8EAF6; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    background-color: #E8EAF6;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+
 }
 
 /* The navigation menu links */
@@ -85,27 +99,71 @@ form input {
     color: #f1f1f1;
 }
 
-/* Position and style the close button (top right corner) */
-.sidenav .closebtn {
-    position: absolute;
-    top: 50px;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+transparent {
+  background-color: rgba(92,107,192, .5)
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
-    transition: margin-left .5s;
-    padding: 20px;
+#bottom {
+  position: relative;
+  margin: auto;
+  text-align: center;
+  min-height: 10%;
+  height: 10%;
+}
+
+#over {
+  margin: auto;
+}
+
+#places {
+  overflow: scroll;
+  background-color: white;
+  height: 80%;
+}
+
+#originString {
+  text-align: center;
+}
+
+.container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    margin-right: 20px;
+    width: 42px;
+    height: 42px;
+    /*border: #333 solid 2px;*/
+    z-index: 2;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0 0 2px;
+    transition: 0.4s;
+}
+
+/* Rotate first bar */
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+    transform: rotate(-45deg) translate(-9px, 6px) ;
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+    opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+    transform: rotate(45deg) translate(-8px, -8px) ;
 }
 
 .none {
   display: none;
-}
-
-transparent {
-  background-color: rgba(92,107,192, .5)
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
