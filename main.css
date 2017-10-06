@@ -263,7 +263,7 @@ transparent {
   margin-bottom: 20px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) and (orientation: portrait) {
   #origin {
     margin-top: 0;
   }
@@ -274,8 +274,9 @@ transparent {
 
   #places {
     position: fixed;
-    bottom: 0;
-    height: 33.33%;
+    bottom: 5%;
+    height: 0;
+    width: 100%;
   }
 
   #bottom {
@@ -287,7 +288,7 @@ transparent {
   }
 
   #bottom-wrapper {
-    padding: 0;
+    padding: 5px 0;
   }
 
   #select {
@@ -297,15 +298,108 @@ transparent {
   #startOver {
     margin-bottom: 0;
   }
+
   h3 {
     padding: 0;
     margin: 0;
   }
 
   #origin {
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding: 1em 4em .75em;
     background-color: #9E9E9E;
+  }
+
+  .container {
+      top: 12px;
+      left: 8px;
+      cursor: pointer;
+      margin-right: 0;
+      width: 15px;
+      height: 15px;
+      z-index: 2;
+  }
+
+  #over2 {
+    position: absolute;
+    top: 18px;
+    right: 10px;
+    cursor: pointer;
+    margin-right: 0;
+    z-index: 2;
+  }
+
+  #prompt {
+    text-align: center;
+    margin: 50% auto;
+  }
+
+  #address-input {
+    width: 60%;
+    margin: 1.5em auto 0;
+    display: block;
+  }
+
+  form button {
+    margin-top: .5em;
+    width: 30%;
+  }
+
+  #findCommute {
+    padding: 0 20%;
+  }
+
+  form {
+    width: 100%;
+  }
+  #places ol li {
+    margin-bottom: 6px;
+  }
+}
+
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  #origin {
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  #select {
+    padding-top: 0;
+  }
+  #places {
+    position: fixed;
+    bottom: 0;
+    height: 0;
+    width: 100%;
+    text-align: center;
+  }
+  #places ol {
+        text-align: center;
+  }
+
+  #bottom {
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    height: 7%;
+    min-height: 7%;
+    border-radius: 7px;
+    padding: 3px;
+  }
+  #bottom-wrapper {
+    padding: 0;
+  }
+  #commute {
+    margin-top: 5px;
+  }
+  ol {
+    list-style-position: inside;
+  }
+
+  #over2 {
+    margin-left: 10px;
+  }
+  #places ol li {
+    margin-bottom: 6px;
   }
 }
 

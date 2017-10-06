@@ -36,9 +36,9 @@ function init() {
     $('#over').on('click', function(){
       startOver();
     })
-    $('#over2').on('click', function(){
-      startOver();
-    })
+    $('#origin').on('click', '#over2', function(){
+    startOver();
+  });
   })
   function geoCode(address) {
     let location = address
@@ -81,7 +81,7 @@ function initMap(x, y, a) {
   if (screen.width>768) {
    $('#origin').html(`<h3>Your origin is <strong>${a}</strong></h3>`);
  } else if (screen.width<=768){
-   $('#origin').html(`<p>Your origin is <strong>${a}</strong></p><button id="over2" class='inline'>New</button>`)
+   $('#origin').html(`<p class="inline">Your origin is <strong>${a}</strong></p><button id="over2" class='inline'>New</button>`)
  }
    var infowindow = new google.maps.InfoWindow({
      content: originString,
@@ -108,6 +108,7 @@ function initMap(x, y, a) {
       }
   });
   google.maps.event.addListener(map, 'click', function(event) {
+    setPlacesMobile();
      infowindow.close();
      placeMarker(event.latLng);
      geocoder.geocode({
@@ -119,7 +120,11 @@ function initMap(x, y, a) {
            newAddress.push(betaAddress);
            z += 1;
            let type = $('#type').find(":selected").text();
-           getDistance(betaAddress, type.toUpperCase(), z);
+           if (screen.width>768) {
+             getDistance(betaAddress, type.toUpperCase(), z);
+           } else if (screen.width<=768) {
+             getDistanceMobile(betaAddress, type.toUpperCase(), z);
+           }
          }
        }
      })
@@ -145,7 +150,6 @@ function getDistance(x, y, z) {
     destination : x,
     travelMode  : travelModeVar
   };
-
   directionsService.route(request, function(response, status) {
     if ( status == google.maps.DirectionsStatus.OK ) {
       let caseY = properCase(y);
@@ -159,6 +163,84 @@ function getDistance(x, y, z) {
     }
   })
 };
+
+function getDistanceMobile(x, y, z) {
+  let travelModeVar;
+  for (let travelMode in google.maps.DirectionsTravelMode){
+    if (travelMode==y) {
+      travelModeVar = y;
+    }
+  }
+  var directionsService = new google.maps.DirectionsService();
+  var request = {
+    origin      : homeAddress[0],
+    destination : x,
+    travelMode  : travelModeVar
+  };
+  directionsService.route(request, function(response, status) {
+    if ( status == google.maps.DirectionsStatus.OK ) {
+      let caseY = properCase(y);
+      let distance = Math.floor(response.routes[0].legs[0].duration.value/60)
+      let distance2 = response.routes[0].legs[0].duration.value%60;
+      $('#places ol').append(`<li class=${z}></li>`);
+      $(`.${z}`).append(`<strong><span id="${caseY}">${caseY}:</span></strong> <strong>${distance} minutes ${distance2} seconds</strong> from the origin.`);
+    }
+  else {
+    alert("Sorry. There is no route between these points. Please try again.")
+    }
+  })
+};
+
+
+function isNavMobile(x) {
+  if (screen.width>768) {
+    openClose(x);
+  } else if (screen.width<=768) {
+    openCloseMobile(x);
+  }
+}
+
+function openCloseMobile(x) {
+   if ($('.container').hasClass('change') === true) {
+     x.classList.toggle("change");
+     closeNavMobile();
+   }
+    else if ($('.container').hasClass('change') === false) {
+      x.classList.toggle("change");
+      openNavMobile();
+    }
+    else {
+      alert('You are screwed');
+    }
+}
+
+function setNavMobile() {
+    document.getElementById("mySidenav").style.height = "16%";
+    $('#commute').html('Get commute times for: ');
+}
+
+function setPlacesMobile() {
+  document.getElementById("places").style.height = "33.33%";
+}
+
+function openNavMobile() {
+    document.getElementById("mySidenav").style.top = "0px";
+    document.getElementById("bottom").style.bottom = "0px";
+    document.getElementById("places").style.bottom = "0px";
+}
+
+function closeNavMobile() {
+    document.getElementById("mySidenav").style.top = "-200px";
+    document.getElementById("bottom").style.bottom = "-100px";
+    document.getElementById("places").style.bottom = "-250px";
+
+
+}
+
+function closeNavIconMobile() {
+    document.getElementById("mySidenav").style.left = "-500px";
+}
+
 
 
 function setNav() {
@@ -187,36 +269,6 @@ function openClose(x) {
       openNav();
     }
 }
-
-
-function setNavMobile() {
-    document.getElementById("mySidenav").style.height = "25%";
-    $('#commute').html('Get commute times for: ');
-}
-
-function openNavMovile() {
-    document.getElementById("mySidenav").style.left = "0px";
-}
-
-function closeNavMobile() {
-    document.getElementById("mySidenav").style.left = "-500px";
-}
-
-function closeNavIconMobile() {
-    document.getElementById("mySidenav").style.left = "-500px";
-}
-
-function openCloseMobile(x) {
-   if ($('.container').hasClass('changeMobile') === true) {
-     x.classList.toggle("changeMobile");
-     closeNavMobile();
-   }
-    else if ($('.container').hasClass('changeMobile') === false) {
-      x.classList.toggle("changeMobile");
-      openNavMobile();
-    }
-}
-
 
 function pushAddress(x) {
   originString = $(`Your origin address is ${x}`);

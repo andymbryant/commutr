@@ -17,7 +17,7 @@
 <body>
 
   <div id="mySidenav" class="sidenav">
-    <div id="icon" class="container change none" onclick="openClose(this)" href="javascript:void(0)">
+    <div id="icon" class="container change none" onclick="isNavMobile(this)" href="javascript:void(0)">
       <div class="bar1"></div>
       <div class="bar2"></div>
       <div class="bar3"></div>
@@ -26,7 +26,7 @@
 
     <div id="prompt">
       <h1><strong>Commutr</strong></h1>
-      <p><em>Find commute times from a single origin using Google Maps.</em></p>
+      <p id="findCommute"><em>Find commute times from a single origin using Google Maps.</em></p>
       <form>
         <input type='text' class='' id="address-input" name="address-input" placeholder="Enter an address">
         <button>Submit</button>
