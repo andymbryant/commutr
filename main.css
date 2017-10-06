@@ -8,6 +8,13 @@ html, body, #wrapper {
   width: 100%;
 }
 
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+}
+
 h1, h4, p {
   text-align: center;
 }
@@ -16,6 +23,50 @@ h1 {
   font-weight: 700;
   font-size: 50px;
   margin: 0;
+}
+
+p {
+  display: inline-block;
+  margin-bottom: 2px;
+}
+
+button {
+  color: #ffffff;
+  font-size: 15px;
+  background: #F44336;
+  padding: 5px 10px;
+  text-decoration: none;
+  border: none;
+  border-radius: 7px;
+}
+
+button:hover {
+  background: #D32F2F;
+  text-decoration: none;
+  outline: 0;
+}
+
+select {
+  border: none;
+  outline: 0;
+  background-color: #757575;
+  color: white;
+}
+
+option {
+  background-color: purple;
+  color: red;
+}
+
+form input {
+  padding: 5px 10px;
+  border: none;
+  outline: 0;
+  background-color: white;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
 #prompt {
@@ -33,51 +84,69 @@ form input {
 }
 
 #origin {
-  margin-top: 30px;
+  margin-top: 40px;
   text-align: center;
-  padding: 0 10px;
+  padding: 0 8%;
+}
+
+#origin h3 {
+  margin-bottom: 0;
+}
+
+#startOver, #select {
+  text-align: center;
 }
 
 #select {
-  text-align: center;
+  padding: 0 8%;
+  padding-bottom: 20px;
+}
 
+#startOver {
+  background-color: #E0E0E0;
+  padding: 0 8%;
+  margin-bottom: 12px;
 }
 
 .inline {
   display: inline;
 }
 
-#color1 {
+#Driving {
   color: red;
 }
 
-#color2 {
+#Transit {
   color: blue;
 }
 
-#color3 {
+#Bicycling {
   color: green;
 }
 
-#color4 {
+#Walking {
   color: orange;
 }
 
 #mySidenav {
   width: 100%;
   height: 100%;
+  max-height: 100%;
+  background-color: #E0E0E0;
   display: absolute;
-  overflow-x: hidden;
+  overflow-y: hidden;
+  min-width: 250px;
+  box-shadow: 1px 0px 20px grey;
 }
+
 
 .sidenav {
     height: 100%;
-    width: 0;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #E8EAF6;
+    background-color: #E0E0E0;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 20px;
@@ -109,6 +178,21 @@ transparent {
   text-align: center;
   min-height: 10%;
   height: 10%;
+  background-color: grey;
+}
+
+
+#bottom h3 {
+  margin: 0;
+  display: inline;
+}
+
+#bottom p {
+  font-size: 10px;
+}
+
+#bottom-wrapper {
+  padding: 15px 0;
 }
 
 #over {
@@ -117,12 +201,25 @@ transparent {
 
 #places {
   overflow: scroll;
-  background-color: white;
-  height: 80%;
+  background-color: #F5F5F5;
+  height: 70%;
+  flex: 1;
 }
 
 #originString {
   text-align: center;
+}
+
+#places ol {
+  margin: 10px 20px 0 10px;
+}
+
+#places ol li {
+  margin: 0 0 20px 0;
+}
+
+#places ol ul li {
+  padding: 5px;
 }
 
 .container {
@@ -133,7 +230,6 @@ transparent {
     margin-right: 20px;
     width: 42px;
     height: 42px;
-    /*border: #333 solid 2px;*/
     z-index: 2;
 }
 
@@ -166,7 +262,10 @@ transparent {
   display: none;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+#prompt p {
+  margin-bottom: 20px;
+}
+
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}

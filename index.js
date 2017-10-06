@@ -21,11 +21,12 @@ function init() {
     $('#map').removeClass('none');
     $('#icon').removeClass('none');
     $('#places').removeClass('none');
-    $('#type').removeClass('none');
+    $('#select').removeClass('none');
     $('#mySidenav').removeClass('transparent');
     geoCode(location);
-    $('#origin').html(`<h4>Your origin is <strong>${location}</strong></h4>`);
-    $('#bottom').html('<button class="inline" id="over">start over</button>');
+    $('#startOver').removeClass('none');
+    $('#bottom').removeClass('none');
+    $('#startOver').removeClass('none');
     $('#over').on('click', function(){
       startOver();
     })
@@ -56,16 +57,20 @@ function initMap(x, y, a) {
   let options = {
     zoom:13,
     center: new google.maps.LatLng(x, y),
-    mapTypeControl: false
+    mapTypeControl: false,
+    streetViewControl: false,
+    rotateControl: false,
+    fullscreenControl: false
   }
   let originString = `<div id="originString">
   <p>Your origin is <strong>${a}.</strong><p>
   <p>Click on the map to find commute times to and from other locations.</p>
   </div>
   `;
-
+   $('#origin').html(`<h3>Your origin is <strong>${a}</strong></h3>`);
    var infowindow = new google.maps.InfoWindow({
-     content: originString
+     content: originString,
+     maxWidth: 300
    });
 
   let labels = '123456789';
@@ -77,10 +82,19 @@ function initMap(x, y, a) {
     icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
   });
   infowindow.open(map, alpha_marker);
-  setTimeout(function () { infowindow.close(); }, 5000);
+  setTimeout(function () { infowindow.close(); }, 8000);
   let z = 0;
   let geocoder = new google.maps.Geocoder();
+  alpha_marker.addListener('click', function() {
+    if (infowindow.getMap() !== null) {
+      infowindow.close();
+    }
+      else if (infowindow.getMap() == null) {
+        infowindow.open(map, alpha_marker);
+      }
+  });
   google.maps.event.addListener(map, 'click', function(event) {
+     infowindow.close();
      placeMarker(event.latLng);
      geocoder.geocode({
        'latLng': event.latLng
@@ -117,13 +131,14 @@ function getDistance(x, y, z) {
     destination : x,
     travelMode  : travelModeVar
   };
+
   directionsService.route(request, function(response, status) {
     if ( status == google.maps.DirectionsStatus.OK ) {
-      //console.log(response.routes[0].legs[0].distance.value); // the distance in metres
+      let caseY = properCase(y);
       let distance = Math.floor(response.routes[0].legs[0].duration.value/60)
       let distance2 = response.routes[0].legs[0].duration.value%60;
       $('#places ol').append(`<li>${x}<ul class=${z}></ul></li>`);
-      $(`.${z}`).append(`<li><strong><span id="color1">Driving:</span></strong> ${distance} minutes ${distance2} seconds</li>`);
+      $(`.${z}`).append(`<li><strong><span id="${caseY}">${caseY}:</span></strong> <strong>${distance} minutes ${distance2} seconds</strong> from the origin.</li>`);
     }
   else {
     alert("Sorry. There is no route between these points. Please try again.")
@@ -164,4 +179,10 @@ function pushAddress(x) {
 
 function closeInfoWindow() {
   infowindow.close();
+}
+
+function properCase(string) {
+    return string.replace(/\w\S*/g, function (word) {
+        return word.charAt(0) + word.slice(1).toLowerCase();
+    });
 }
