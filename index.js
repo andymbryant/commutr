@@ -1,5 +1,6 @@
 $(function(){
   init();
+  initMapAlpha()
 })
 
 function startOver() {
@@ -53,15 +54,23 @@ function init() {
   }
 }
 
-function initMap(x, y, a) {
+let map;
+
+function initMapAlpha() {
   let options = {
-    zoom:13,
-    center: new google.maps.LatLng(x, y),
+    zoom:5,
+    center: new google.maps.LatLng(39.8097, -98.5556),
     mapTypeControl: false,
     streetViewControl: false,
     rotateControl: false,
     fullscreenControl: false
   }
+  map = new google.maps.Map(document.getElementById('map'), options);
+}
+
+function initMap(x, y, a) {
+  map.panTo(new google.maps.LatLng(x, y));
+  map.setZoom(14);
   let originString = `<div id="originString">
   <p>Your origin is <strong>${a}.</strong><p>
   <p>Click on the map to find commute times to and from other locations.</p>
@@ -75,7 +84,7 @@ function initMap(x, y, a) {
 
   let labels = '123456789';
   let labelIndex = 0;
-  let map = new google.maps.Map(document.getElementById('map'), options);
+  // let map = new google.maps.Map(document.getElementById('map'), options);r
   let alpha_marker = new google.maps.Marker({
     position: new google.maps.LatLng(x, y),
     map:map,
