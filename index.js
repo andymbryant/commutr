@@ -1,13 +1,19 @@
 $(function(){
   init();
-  initMapAlpha()
 })
 
 function startOver() {
   location.reload();
 }
 
-//I am now testing at 6:41p.
+function screenSize() {
+  if (screen.width>768) {
+    setNav();
+    $('#startOver').removeClass('none');
+  } else {
+    setNavMobile();
+  }
+}
 
 let homeAddress = [];
 let newAddress = [];
@@ -17,18 +23,20 @@ function init() {
   $('button').on('click', function(event){
     event.preventDefault();
     let location = $('#address-input').val();
-    setNav();
+    screenSize();
     $('#prompt').addClass('none');
     $('#map').removeClass('none');
     $('#icon').removeClass('none');
     $('#places').removeClass('none');
     $('#select').removeClass('none');
     $('#mySidenav').removeClass('transparent');
+    $('#origin').removeClass('none');
     geoCode(location);
-    $('#startOver').removeClass('none');
     $('#bottom').removeClass('none');
-    $('#startOver').removeClass('none');
     $('#over').on('click', function(){
+      startOver();
+    })
+    $('#over2').on('click', function(){
       startOver();
     })
   })
@@ -42,7 +50,6 @@ function init() {
     })
     .then(function(response){
         let formattedAddress = response.data.results[0].formatted_address;
-        //var addressComponents = response.data.results[0].address_components;
         let lat = response.data.results[0].geometry.location.lat;
         let lng = response.data.results[0].geometry.location.lng;
         homeAddress.push(formattedAddress);
@@ -54,29 +61,28 @@ function init() {
   }
 }
 
-let map;
-
-function initMapAlpha() {
+function initMap(x, y, a) {
   let options = {
-    zoom:5,
-    center: new google.maps.LatLng(39.8097, -98.5556),
+    zoom:14,
+    zoomControlOptions: {position: google.maps.ControlPosition.RIGHT_CENTER},
+    center: new google.maps.LatLng(x, y),
     mapTypeControl: false,
     streetViewControl: false,
     rotateControl: false,
     fullscreenControl: false
   }
-  map = new google.maps.Map(document.getElementById('map'), options);
-}
 
-function initMap(x, y, a) {
-  map.panTo(new google.maps.LatLng(x, y));
-  map.setZoom(14);
+  map = new google.maps.Map(document.getElementById('map'), options);
   let originString = `<div id="originString">
   <p>Your origin is <strong>${a}.</strong><p>
   <p>Click on the map to find commute times to and from other locations.</p>
   </div>
   `;
+  if (screen.width>768) {
    $('#origin').html(`<h3>Your origin is <strong>${a}</strong></h3>`);
+ } else if (screen.width<=768){
+   $('#origin').html(`<p>Your origin is <strong>${a}</strong></p><button id="over2" class='inline'>New</button>`)
+ }
    var infowindow = new google.maps.InfoWindow({
      content: originString,
      maxWidth: 300
@@ -84,7 +90,6 @@ function initMap(x, y, a) {
 
   let labels = '123456789';
   let labelIndex = 0;
-  // let map = new google.maps.Map(document.getElementById('map'), options);r
   let alpha_marker = new google.maps.Marker({
     position: new google.maps.LatLng(x, y),
     map:map,
@@ -155,8 +160,9 @@ function getDistance(x, y, z) {
   })
 };
 
+
 function setNav() {
-    document.getElementById("mySidenav").style.width = "25%";
+    document.getElementById("mySidenav").style.width = "425px";
 }
 
 function openNav() {
@@ -181,6 +187,36 @@ function openClose(x) {
       openNav();
     }
 }
+
+
+function setNavMobile() {
+    document.getElementById("mySidenav").style.height = "25%";
+    $('#commute').html('Get commute times for: ');
+}
+
+function openNavMovile() {
+    document.getElementById("mySidenav").style.left = "0px";
+}
+
+function closeNavMobile() {
+    document.getElementById("mySidenav").style.left = "-500px";
+}
+
+function closeNavIconMobile() {
+    document.getElementById("mySidenav").style.left = "-500px";
+}
+
+function openCloseMobile(x) {
+   if ($('.container').hasClass('changeMobile') === true) {
+     x.classList.toggle("changeMobile");
+     closeNavMobile();
+   }
+    else if ($('.container').hasClass('changeMobile') === false) {
+      x.classList.toggle("changeMobile");
+      openNavMobile();
+    }
+}
+
 
 function pushAddress(x) {
   originString = $(`Your origin address is ${x}`);
