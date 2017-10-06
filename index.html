@@ -8,29 +8,54 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
   <script  async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZI_FNTwVdkIH94_q1OdbChfEriD_44XI&callback=initMap&libraries=geometry,places&ext=.js">
     </script>
-  <!--<script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry,places&ext=.js"></script>-->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"> -->
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css">
   <link rel="stylesheet" href="main.css">
 
   <title>Commutr App</title>
 </head>
 <body>
-  <div id="prompt">
-    <h1>Commutr App</h1>
-    <p><em>Enter an address</em></p>
-    <form>
-      <input type='text' class='' id="address-input" name="address-input" placeholder="Enter address here">
-      <label for="address-input">
-      <button>Submit</button>
-    </form>
-  </div>
-  <div id="map" class='none'></div>
-  <div id="origin"></div>
-  <div id="places">
-    <ol>
-    </ol>
+
+  <div id="mySidenav" class="sidenav">
+    <div id="icon" class="container change none" onclick="isNavMobile(this)" href="javascript:void(0)">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </div>
+
+
+    <div id="prompt">
+      <h1><strong>Commutr</strong></h1>
+      <p id="findCommute"><em>Find commute times from a single origin using Google Maps.</em></p>
+      <form>
+        <input type='text' class='' id="address-input" name="address-input" placeholder="Enter an address">
+        <button>Submit</button>
+      </form>
+    </div>
+    <div id="origin" class="none"></div>
+    <div id="select" class="none">
+      <p id="commute">Click on the map to get commute times for: </p>
+      <select id="type">
+        <option value="Walking">Walking</option>
+        <option value="Bicycling">Bicycling</option>
+        <option value="Transit">Transit</option>
+        <option value="Driving" selected>Driving</option>
+      </select>
+    </div>
+    <div id="places" class="none">
+      <ol>
+      </ol>
+    </div>
+    <div id="startOver" class="none">
+      <p>Or you can: </p> <button class="inline" id="over">Start Over</button>
+    </div>
+    <div id="bottom" class="none">
+      <div id="bottom-wrapper"><h3><strong>Commutr</strong></h3> <p>&#169 2017</div>
+    </div>
+</div>
+
+  <div id="wrapper">
+    <div id="map"></div>
   </div>
 
 <script type="text/javascript" src='index.js'></script>
